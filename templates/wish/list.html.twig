@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | List{% endblock %}
+
+
+{% block body %}
+
+    <div>
+        <h1>Tu es dans la page List ✅</h1>
+
+        <p>Liste des choses à faire.</p>
+        <ul>
+
+            {% for chaqueWish in wishsPublicated %} {# {% for chaqueWish in tousLesWishs %} #}
+            <li>
+                <p><a class="textNoDecoration" href="{{ path('wish_detail',{"id": chaqueWish.id}) }}">{{ chaqueWish.title }}</a></p>
+
+            </li>
+            {% endfor %}
+
+        </ul>
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Pompiere&display=swap');.box-reverse {
+    display: flex;
+    flex-direction: row-reverse;
+}
+.textNoDecoration{
+    text-decoration: none;
+}
+
+.testfontgoogle {
+    font-family: 'Carter One', serif;
+    font-size: 36px;
+    text-shadow: 4px 4px 4px #aaa;
+}
+.textfontcarter{
+    font-family: 'Carter One', serif;
+}
+.textfontpompiere{
+    font-family: 'Pompiere', serif;
+    font-size: 26px;
+}
+
+.blocktext-center {
+text-align: center;
+}
+
+.box-reverse ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.box-reverse li {
+    float: left;
+}
+
+.box-reverse li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+.box-reverse li a:hover {
+    background-color: #111;
+}
+
+.basdepage{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    text-align: center;
+
+}
+.textAreaFix{
+    resize: both;
+    min-width: 300px;
+    min-height: 100px;
+    max-width: 500px;
+    max-height: 200px;
+
+}
+
+
+

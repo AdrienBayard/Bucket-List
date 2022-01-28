@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Page écrire son souhait:
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(wishFormulaire) }}
+    {{ form_widget(wishFormulaire) }}
+    <button>Envoyer</button>
+    {{ form_end(wishFormulaire) }}
+
+{% endblock %}
+

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet"
+              href="{{ asset('css/style.css') }}">
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" href="{{ asset('img/favicon.png') }}">
+
+        <title>{% block title %}Bucket-List{% endblock %}</title>
+        <div class="blocktext-center testfontgoogle">
+
+                <h1><img src="{{ asset('img/logo.png') }}" alt="logo Bucket-List">    BUCKET-LIST</h1>
+
+        </div>
+
+
+
+        <nav class="box-reverse textfontcarter">
+            <ul>
+                <li><a href="{{ path('home_index') }}">Accueil</a></li>
+                <li><a href="{{ path('home_une_autre_page') }}">Une 2ème page</a></li>
+                <li><a href="{{ path('wish_addwish') }}">Ajoute ton souhait</a></li>
+                <li><a href="{{ path('wish_list') }}">Listes</a></li>
+                <li><a href="{{ path('home_about_us') }}">About us</a></li>
+            </ul>
+        </nav>
+    </head>
+
+    <body>
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+
+    <section class="section textfontpompiere">
+        <div class="container">
+        {% block body %}{% endblock %}
+        </div>
+    </section>
+    </body>
+
+
+<footer>
+    <div class="basdepage">
+        <p>©Bucket-List {{ "now"|date("Y") }}</p>
+        {# Date du jour {{ "now"|date("d/m/Y") }} #}
+    </div>
+
+</footer>
+</html>
