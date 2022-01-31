@@ -23,8 +23,8 @@ class WishRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder("w");
         $qb
             ->andWhere("w.isPublished = true")
-            ->addOrderBy("w.dateCreated", "DESC
-            ");
+            ->addOrderBy("w.dateCreated", "DESC")
+        ;
 
         $requete = $qb->getQuery();
         return $requete->execute();
