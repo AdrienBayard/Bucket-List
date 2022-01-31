@@ -31,6 +31,11 @@ class Wish
     #[ORM\Column(type: 'datetime')]
     private $dateCreated;
 
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'wishes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $categorie;
+
+
     public function __construct()   // créer par nous même afin de générer la date du jour pour la date et heure des messages
                                     // idem pour la case 'isPublished' qui est cochée par défaut
                                     // on crée cette fonction __construct afin de proposer nos modifications
@@ -103,4 +108,20 @@ class Wish
 
         return $this;
     }
+
+    public function getCategorie(): ?Category
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Category $categorie): self
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+
+
+
 }

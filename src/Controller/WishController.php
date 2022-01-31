@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Wish;
 use App\Form\WishType;
+use App\Repository\CategoryRepository;
 use App\Repository\WishRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -95,7 +96,8 @@ class WishController extends AbstractController
     #[Route('/addwish', name: '_addwish')]
     public function addwish(
         Request $request,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        CategoryRepository $categoryRepository
     ): Response
     {
         $wish = new wish();
@@ -112,12 +114,13 @@ class WishController extends AbstractController
 
 
             $this->addFlash("bravo","Idea successfully added @Dev_Adrien");
-            return $this->redirectToRoute("wish_list"); //rediriger vers une route "après formulaire"
+            return $this->redirectToRoute("wish_detail",['id' => $wish->getId()]); //rediriger vers une route "après formulaire"
         }
 
+
         return $this->render('wish/addwish.html.twig',
-            ["wishFormulaire" => $wishFormulaire->createView()]
-        );
+            ["wishFormulaire" => $wishFormulaire->createView()
+                ]);
     }
 
 

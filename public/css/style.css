@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Pompiere&display=swap');.box-reverse {
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Pompiere&display=swap');
+
+.box-reverse {
     display: flex;
     flex-direction: row-reverse;
 }
@@ -53,15 +55,14 @@ text-align: center;
     bottom:0;
     width:100%;
     text-align: center;
-
 }
+
 .textAreaFix{
     resize: both;
     min-width: 300px;
     min-height: 100px;
     max-width: 500px;
     max-height: 200px;
-
 }
 
 
