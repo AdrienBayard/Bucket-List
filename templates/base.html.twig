@@ -1,50 +1,69 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet"
-              href="{{ asset('css/style.css') }}">
+<head>
+    <link rel="stylesheet"
+          href="{{ asset('css/style.css') }}">
 
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="icon" href="{{ asset('img/favicon.png') }}">
+    <link rel="icon" href="{{ asset('img/favicon.png') }}">
 
-        <title>{% block title %}Bucket-List{% endblock %}</title>
-        <div class="blocktext-center testfontgoogle">
+    <title>{% block title %}Bucket-List{% endblock %}</title>
+    <div class="blocktext-center testfontgoogle">
 
-                <h1><img src="{{ asset('img/logo.png') }}" alt="logo Bucket-List">    BUCKET-LIST</h1>
+        <h1><img src="{{ asset('img/logo.png') }}" alt="logo Bucket-List"> BUCKET-LIST</h1>
 
+    </div>
+
+    {% if app.user %}
+        <div>
+            <p>Hello {{ app.user.prenom }} {{ app.user.nom }}!</p>
         </div>
+    {% endif %}
 
+    <nav class="box-reverse textfontcarter">
+        <ul>
+            <li><a href="{{ path('home_index') }}">Accueil</a></li>
 
-
-        <nav class="box-reverse textfontcarter">
-            <ul>
-                <li><a href="{{ path('home_index') }}">Accueil</a></li>
-                <li><a href="{{ path('home_une_autre_page') }}">Une 2ème page</a></li>
+            {% if not app.user %}
+                <li><a href="{{ path('app_register') }}">S'enregistrer</a></li>
+                <li><a href="{{ path('app_login') }}">Se connecter</a></li>
+            {% endif %}
+            {% if app.user %}
+                <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
                 <li><a href="{{ path('wish_addwish') }}">Ajoute ton souhait</a></li>
-                <li><a href="{{ path('wish_list') }}">Listes</a></li>
-                <li><a href="{{ path('home_about_us') }}">About us</a></li>
-            </ul>
-        </nav>
-    </head>
+            {% endif %}
+            <li><a href="{{ path('wish_list') }}">Listes</a></li>
+            <li><a href="{{ path('home_about_us') }}">About us</a></li>
 
-    <body>
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="flash-{{ label }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endfor %}
+            {% if app.user %}
+                {% for roles in app.user.roles %}
+                    {% if roles == "ROLE_ADMIN" %}
+                        <li><a href="{{ path('admin') }}">Admin</a></li>
+                    {% endif %}{% endfor %}{% endif %}
 
 
-    <section class="section textfontpompiere">
-        <div class="container">
-        {% block body %}{% endblock %}
+        </ul>
+    </nav>
+</head>
+
+<body>
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="flash-{{ label }}">
+            {{ message }}
         </div>
-    </section>
-    </body>
+    {% endfor %}
+{% endfor %}
+
+
+<section class="section textfontpompiere">
+    <div class="container">
+        {% block body %}{% endblock %}
+    </div>
+</section>
+</body>
 
 
 <footer>

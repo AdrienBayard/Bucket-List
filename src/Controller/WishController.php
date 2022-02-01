@@ -8,6 +8,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\WishRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,33 +32,33 @@ class WishController extends AbstractController
     {
         $wishsPublicated = $wishRepository->findWishPublicated("1");
 
-/*      $tousLesWishs = $wishRepository->findBy(["isPublished" =>"true"], ["dateCreated" => "DESC"]); //version plus rapide sans créer le findWishPublicated
-        dump($tousLesWishs);*/
+        /*      $tousLesWishs = $wishRepository->findBy(["isPublished" =>"true"], ["dateCreated" => "DESC"]); //version plus rapide sans créer le findWishPublicated
+                dump($tousLesWishs);*/
 
         return $this->render('wish/list.html.twig',
-        compact(/*"tousLesWishs",*/ "wishsPublicated")
+            compact(/*"tousLesWishs",*/ "wishsPublicated")
         );
 
     }
 
-/*    #[Route('/detail/{id}', name: '_detail')]
-    public function detail($id): Response
-    {
-        return $this->render('wish/detail.html.twig',
-        compact("id"));
-    }*/
+    /*    #[Route('/detail/{id}', name: '_detail')]
+        public function detail($id): Response
+        {
+            return $this->render('wish/detail.html.twig',
+            compact("id"));
+        }*/
 
     //-----------------------------------------------------------
-/*    #[Route('/detail/{id}', name: '_detail')]
-    public function detail(
-        WishRepository $wishRepository, $id
-    ): Response
-    {
-        $wish = $wishRepository->findOneBy(["id"=>$id], []);
-
-        return $this->render('wish/detail.html.twig',
-            ["wish"=>$wish]);
-    }*/
+    /*    #[Route('/detail/{id}', name: '_detail')]
+        public function detail(
+            WishRepository $wishRepository, $id
+        ): Response
+        {
+            $wish = $wishRepository->findOneBy(["id"=>$id], []);
+    
+            return $this->render('wish/detail.html.twig',
+                ["wish"=>$wish]);
+        }*/
     // VERSION JULIEN
     // plus rapide car symfony comprend que wish va travailler avec l'id
 
@@ -73,7 +74,7 @@ class WishController extends AbstractController
 
     //-----------------------------------------------------------
 
-
+    #[IsGranted("ROLE_USER")]
     #[Route('/ajoutdetail', name: '_ajoutdetail')]
     public function ajoutdetail(
         EntityManagerInterface $entityManager
@@ -92,37 +93,37 @@ class WishController extends AbstractController
         );
     }
 
-
     #[Route('/addwish', name: '_addwish')]
     public function addwish(
-        Request $request,
+        Request                $request,
         EntityManagerInterface $entityManager,
-        CategoryRepository $categoryRepository
+        CategoryRepository     $categoryRepository
     ): Response
     {
         $wish = new wish();
+        $wish->setAuthor($this->getUser()->getUserIdentifier());
         $wishFormulaire = $this->createForm(WishType::class, $wish);
 
+
         $wishFormulaire->handleRequest($request); //------------------
-        if($wishFormulaire->isSubmitted()
+        if ($wishFormulaire->isSubmitted()
             && $wishFormulaire->isValid()  //---permet de vérifier avnt d'envoyer en base
 
-        ){         //------ permet d'insérer le formulaire en bdd
+        ) {         //------ permet d'insérer le formulaire en bdd
 
             $entityManager->persist($wish);
             $entityManager->flush();
 
 
-            $this->addFlash("bravo","Idea successfully added @Dev_Adrien");
-            return $this->redirectToRoute("wish_detail",['id' => $wish->getId()]); //rediriger vers une route "après formulaire"
+            $this->addFlash("bravo", "Idea successfully added @Dev_Adrien");
+            return $this->redirectToRoute("wish_detail", ['id' => $wish->getId()]); //rediriger vers une route "après formulaire"
         }
 
 
         return $this->render('wish/addwish.html.twig',
             ["wishFormulaire" => $wishFormulaire->createView()
-                ]);
+            ]);
     }
-
 
 
 }
